@@ -1,0 +1,57 @@
+.control-menu {
+    margin: 2em;
+  }
+  
+  .card {
+    padding: 1em;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .card-new {
+    border: 1px solid #aad;
+  }
+  
+  .list-wrap {
+    margin: 0 2em 0 2em;
+  }
+  
+  .license-item-wrap {
+    max-width: 500px;
+    margin: 0 0 2em 0;
+  }
+ 
+  .card-new {
+    background-color: rgb(225, 225, 239);
+  }
+
+  @media screen and (max-width: 600px) {
+    .control-menu {
+      margin: 2em 1em 2em 1em;
+    }
+  
+    .license-item-wrap {
+      margin: 0 0 2em 0;
+    }
+  
+    .list-wrap {
+      margin: 0 1em 0 1em;
+    }
+  }
+  
+  .date {
+    font-size: small;
+    text-align: right;
+    color: gray;
+  }
+  
+  .msg_type {
+    font-size: small;
+    color: gray;
+  }
+  
+  .text {
+    margin: 1em 0 0 0;
+  }
+  

@@ -7,9 +7,10 @@ use axum::{
 };
 use rusqlite::{Connection, Result};
 use serde::{Deserialize, Serialize};
-use std::sync::Arc;
+use std::{net::SocketAddr, sync::Arc};
 use tokio::sync::Mutex;
-use tower_http::cors::CorsLayer;
+use tower_http::{cors::CorsLayer, services::ServeDir, trace::TraceLayer};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct Entry {
@@ -24,6 +25,15 @@ struct AppState {
 
 #[tokio::main]
 async fn main() {
+    tracing_subscriber::registry()
+        .with(
+            tracing_subscriber::EnvFilter::try_from_default_env().unwrap_or_else(|_| {
+                format!("{}=debug,tower_http=debug", env!("CARGO_CRATE_NAME")).into()
+            }),
+        )
+        .with(tracing_subscriber::fmt::layer())
+        .init();
+
     let cors = CorsLayer::new()
         .allow_methods(vec![Method::GET, Method::POST])
         .allow_headers(vec![header::CONTENT_TYPE])
@@ -33,7 +43,8 @@ async fn main() {
         db: Mutex::new(Connection::open("licenses.sqlite3").unwrap()),
     });
 
-    // our router
+    let frontend = { serve(using_serve_dir(), 3001) };
+
     let app = Router::new()
         .route("/admin/list", get(get_list))
         .route("/:key", get(get_key))
@@ -43,8 +54,18 @@ async fn main() {
         .with_state(shared_state)
         .layer(cors);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
-    axum::serve(listener, app).await.unwrap();
+    let backend = { serve(app, 3000) };
+
+    tokio::join!(frontend, backend);
+}
+
+async fn serve(app: Router, port: u16) {
+    let addr = SocketAddr::from(([0, 0, 0, 0], port));
+    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
+    tracing::debug!("listening on {}", listener.local_addr().unwrap());
+    axum::serve(listener, app.layer(TraceLayer::new_for_http()))
+        .await
+        .unwrap();
 }
 
 /*****************
@@ -157,4 +178,13 @@ async fn post_update(
     )?;
 
     Ok((StatusCode::OK, "OK").into_response())
+}
+
+/*****************
+ * Serving Files
+ *****************/
+
+fn using_serve_dir() -> Router {
+    // serve the file in the "assets" directory under `/assets`
+    Router::new().nest_service("/", ServeDir::new("static"))
 }

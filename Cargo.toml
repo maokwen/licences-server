@@ -6,7 +6,10 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.89"
 axum = { version = "0.7.5", features = ["json", "tracing"] }
+axum-extra = "0.9.3"
 rusqlite = { version = "0.32.1", features = ["bundled"] }
 serde = { version = "1.0.210", features = ["derive"] }
 tokio = { version = "1.40.0", features = ["rt-multi-thread"] }
-tower-http = { version = "0.6.0", features = ["cors"] }
+tower-http = { version = "0.6.0", features = ["cors", "fs", "trace"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }

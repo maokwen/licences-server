@@ -22,6 +22,7 @@ RUN adduser -D -s /bin/sh -u 1000 -G app app
 WORKDIR /app
 COPY --from=builder /workspace/target/release/licenses-server /app/licenses-server
 COPY --from=builder /workspace/licenses.sqlite3 /app/licenses.sqlite3
+COPY --from=builder /workspace/static /app/static
 
 RUN chown -R app:app /app
 USER app
