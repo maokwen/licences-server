@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS "licenses" (
+	"id"		INTEGER,
+	"key"		TEXT NOT NULL,
+	"license"	TEXT NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
