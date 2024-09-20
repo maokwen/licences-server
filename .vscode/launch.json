@@ -7,15 +7,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'licences-server'",
+            "name": "Debug executable 'licenses-server'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=licences-server",
-                    "--package=licences-server"
+                    "--bin=licenses-server",
+                    "--package=licenses-server"
                 ],
                 "filter": {
-                    "name": "licences-server",
+                    "name": "licenses-server",
                     "kind": "bin"
                 }
             },
@@ -25,16 +25,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'licences-server'",
+            "name": "Debug unit tests in executable 'licenses-server'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=licences-server",
-                    "--package=licences-server"
+                    "--bin=licenses-server",
+                    "--package=licenses-server"
                 ],
                 "filter": {
-                    "name": "licences-server",
+                    "name": "licenses-server",
                     "kind": "bin"
                 }
             },

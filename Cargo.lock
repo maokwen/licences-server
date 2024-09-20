@@ -337,7 +337,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "licences-server"
+name = "licenses-server"
 version = "0.1.0"
 dependencies = [
  "anyhow",
