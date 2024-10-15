@@ -161,7 +161,7 @@ async fn post_remove(
 ) -> Result<Response, AppError> {
     let db = state.db.lock().await;
 
-    db.execute("DELETE FROM licenses WHERE key = ?", [entry.key])?;
+    db.execute("DELETE FROM licenses WHERE id = ?", [entry.id])?;
 
     Ok((StatusCode::OK, "OK").into_response())
 }
@@ -172,9 +172,15 @@ async fn post_update(
 ) -> Result<Response, AppError> {
     let db = state.db.lock().await;
 
+    if entry.id.is_none() || entry.license.is_none() {
+        return Err(anyhow::anyhow!("id and license are required").into());
+    }
+
+    let id = entry.id.unwrap().to_string();
+
     db.execute(
-        "UPDATE licenses SET license = ? WHERE key = ?",
-        [entry.license, entry.key],
+        "UPDATE licenses SET license = ? WHERE id = ?",
+        [entry.license, Some(id)],
     )?;
 
     Ok((StatusCode::OK, "OK").into_response())

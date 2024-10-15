@@ -1,5 +1,5 @@
-// const baseurl = "https://licenses.haosoftware.uk/";
 const baseurl = "http://licenses.haoliangsoftware.cn:3000/";
+// const baseurl = "http://localhost:3000/";
 
 let refresh = function () {
     var url = baseurl + 'admin/list';
@@ -74,14 +74,12 @@ let add = function () {
     fetch(request)
         .then((response) => {
             if (response.status === 200) {
+                console.log(response);
+                refresh();
                 return response.json();
             } else {
                 throw new Error('Failed to fetch data');
             }
-        })
-        .then((data) => {
-            console.log(data);
-            refresh();
         });
 };
 
@@ -108,14 +106,11 @@ let update = function(id) {
     fetch(request)
         .then((response) => {
             if (response.status === 200) {
-                return response.json();
+                console.log(response);
+                refresh();
             } else {
                 throw new Error('Failed to fetch data');
             }
-        })
-        .then((data) => {
-            console.log(data);
-            refresh();
         });
 };
 
@@ -137,14 +132,11 @@ let remove = function(id) {
     fetch(request)
         .then((response) => {
             if (response.status === 200) {
-                return response.json();
+                console.log(response);
+                refresh();
             } else {
                 throw new Error('Failed to fetch data');
             }
-        })
-        .then((data) => {
-            console.log(data);
-            refresh();
         });
 };
 
