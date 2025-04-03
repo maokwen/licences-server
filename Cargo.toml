@@ -12,4 +12,4 @@ serde = { version = "1.0.218", features = ["derive"] }
 tokio = { version = "1.44.1", features = ["rt-multi-thread"] }
 tower-http = { version = "0.6.2", features = ["cors", "fs", "trace"] }
 tracing = "0.1.41"
-tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
