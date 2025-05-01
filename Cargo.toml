@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow = "1.0.96"
+anyhow = "1.0.98"
 axum = { version = "0.7.7", features = ["json", "tracing"] }
 axum-extra = "0.9.4"
 rusqlite = { version = "0.34.0", features = ["bundled"] }
